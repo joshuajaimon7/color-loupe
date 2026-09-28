@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ColorLoupe Pro</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-mark">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">
+            <span>ColorLoupe</span>
+            <span class="badge-pro" id="proHeaderBadge">PRO</span>
+          </div>
+          <div class="brand-sub">Eyedropper & Palette Engine</div>
+        </div>
+      </div>
+      <button class="upgrade-btn" id="upgradeBtn">Upgrade</button>
+    </header>
+
+    <!-- Main Pick Action -->
+    <div class="action-bar">
+      <button class="pick-btn" id="pickColorBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m2 22 1-1h3l9-9"/>
+          <path d="M3 21v-3l9-9"/>
+          <path d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 0 1 0 3l-3.8 3.8a2.1 2.1 0 0 1-3 0l-4.2-4.2a2.1 2.1 0 0 1 0-3l3.8-3.8a2.1 2.1 0 0 1 3 0z"/>
+        </svg>
+        <span>Pick Pixel Color</span>
+      </button>
+      <button class="icon-tool-btn" id="scanPageBtn" title="Scan entire page for dominant colors">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="7" height="7" x="3" y="3" rx="1"/>
+          <rect width="7" height="7" x="14" y="3" rx="1"/>
+          <rect width="7" height="7" x="14" y="14" rx="1"/>
+          <rect width="7" height="7" x="3" y="14" rx="1"/>
+        </svg>
+        <span>Scan Site</span>
+      </button>
+    </div>
+
+    <!-- Active Color Card -->
+    <div class="color-hero-card">
+      <div class="swatch-preview" id="heroSwatch" style="background-color: #2997FF;">
+        <span class="swatch-code" id="heroHexCode">#2997FF</span>
+        <button class="copy-badge" id="quickCopyHexBtn" title="Copy HEX">Copy</button>
+      </div>
+
+      <!-- Formats Quick Grid -->
+      <div class="format-rows">
+        <div class="format-item" data-format="hex">
+          <span class="format-label">HEX</span>
+          <span class="format-val" id="valHex">#2997FF</span>
+        </div>
+        <div class="format-item" data-format="rgb">
+          <span class="format-label">RGB</span>
+          <span class="format-val" id="valRgb">rgb(41, 151, 255)</span>
+        </div>
+        <div class="format-item" data-format="hsl">
+          <span class="format-label">HSL</span>
+          <span class="format-val" id="valHsl">hsl(209, 100%, 58%)</span>
+        </div>
+        <div class="format-item" data-format="tailwind">
+          <span class="format-label">Tailwind</span>
+          <span class="format-val" id="valTailwind">bg-[#2997ff]</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10-Step Tint & Shade Palette Scale -->
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-title">10-Step Shade System (50–950)</span>
+        <span class="section-hint">Click swatch to copy</span>
+      </div>
+      <div class="scale-bar" id="scaleContainer">
+        <!-- Generated dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- WCAG 2.1 Contrast Matrix -->
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-title">WCAG 2.1 Contrast & Accessibility</span>
+      </div>
+      <div class="contrast-grid">
+        <div class="contrast-card">
+          <div class="contrast-head">
+            <span class="contrast-label">On White (#FFF)</span>
+            <span class="contrast-score" id="contrastWhiteRatio">3.1:1</span>
+          </div>
+          <div class="badge-row">
+            <span class="wcag-pill fail" id="wcagWhiteAA">AA Normal: Fail</span>
+            <span class="wcag-pill pass" id="wcagWhiteLarge">AA Large: Pass</span>
+          </div>
+        </div>
+
+        <div class="contrast-card">
+          <div class="contrast-head">
+            <span class="contrast-label">On Black (#000)</span>
+            <span class="contrast-score" id="contrastBlackRatio">6.8:1</span>
+          </div>
+          <div class="badge-row">
+            <span class="wcag-pill pass" id="wcagBlackAA">AA Normal: Pass</span>
+            <span class="wcag-pill pass" id="wcagBlackAAA">AAA Large: Pass</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color Blindness Simulation Preview -->
+    <div class="section-box">
+      <div class="section-header">
+        <span class="section-title">Color Blindness Simulator</span>
+      </div>
+      <div class="blindness-grid" id="blindnessGrid">
+        <div class="blind-card">
+          <div class="blind-swatch" id="blindProtan"></div>
+          <div class="blind-name">Protanopia</div>
+        </div>
+        <div class="blind-card">
+          <div class="blind-swatch" id="blindDeutan"></div>
+          <div class="blind-name">Deuteranopia</div>
+        </div>
+        <div class="blind-card">
+          <div class="blind-swatch" id="blindTritan"></div>
+          <div class="blind-name">Tritanopia</div>
+        </div>
+        <div class="blind-card">
+          <div class="blind-swatch" id="blindMono"></div>
+          <div class="blind-name">Monochrome</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Site Palette View (When scanned) -->
+    <div class="section-box" id="sitePaletteBox" style="display: none;">
+      <div class="section-header">
+        <span class="section-title" id="sitePaletteTitle">Discovered Page Palette</span>
+        <button class="clean-link-btn" id="clearSitePaletteBtn">Clear</button>
+      </div>
+      <div class="palette-swatch-list" id="siteSwatchesList"></div>
+    </div>
+
+    <!-- Pro Export Toolbar -->
+    <div class="export-bar">
+      <button class="export-btn" id="exportTailwindBtn">
+        <span>Tailwind Config</span>
+      </button>
+      <button class="export-btn" id="exportCssVarsBtn">
+        <span>CSS Variables</span>
+      </button>
+      <button class="export-btn" id="exportTokensJsonBtn">
+        <span>Tokens JSON</span>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="pro-banner" id="footerBanner">
+        <span>Free tier: Basic HEX/RGB copy</span>
+        <a href="#" id="proUpgradeLink" class="pro-link">Unlock Pro Lifetime ($4.99)</a>
+      </div>
+    </footer>
+
+    <!-- Upgrade Modal (Strictly Absolute to avoid popup expansion) -->
+    <div class="modal-backdrop" id="upgradeModal" style="display: none;">
+      <div class="modal-box">
+        <button class="modal-close" id="modalCloseBtn">&times;</button>
+        <h2>ColorLoupe Pro</h2>
+        <p class="modal-desc">Everything you need to extract colors, generate 10-step design systems, and export ready-to-use frontend tokens.</p>
+        <ul class="modal-perks">
+          <li>Full 10-Step Tint & Shade Palette Scale (50–950)</li>
+          <li>1-Click `tailwind.config.js` Export</li>
+          <li>CSS `:root` Design System Variables</li>
+          <li>Color Blindness Simulation & WCAG Audit</li>
+          <li>Site-Wide Brand Palette & Gradient Extractor</li>
+          <li>Figma Design Tokens JSON Export</li>
+        </ul>
+        <div class="price-tag">
+          <span class="price-val">$4.99</span>
+          <span class="price-period">one-time lifetime license</span>
+        </div>
+        <button class="checkout-btn" id="startCheckoutBtn">Buy Lifetime License ($4.99)</button>
+
+        <div class="license-box">
+          <div class="license-title">Already purchased? Activate key:</div>
+          <div class="license-input-row">
+            <input type="text" id="licenseKeyInput" class="license-input" placeholder="Paste license key...">
+            <button class="license-activate-btn" id="activateKeyBtn">Activate</button>
+          </div>
+          <div class="license-status" id="licenseStatus"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "ColorLoupe Pro - Eyedropper, WCAG & Tailwind Palette Suite",
+  "version": "1.0.0",
+  "description": "Pixel eyedropper, instant 10-step tint/shade generator, WCAG 2.1 contrast auditor, color blindness simulator, and 1-click Tailwind config exporter.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["demo-test.html", "content.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
