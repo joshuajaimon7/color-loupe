@@ -1,7 +1,7 @@
 // ColorLoupe Pro - Popup Logic
 // Eyedropper, 10-Step Tint/Shade Engine, WCAG 2.1 Auditor, Color Blindness Matrix, and Token Exporter
 
-const STORE_CHECKOUT_URL = "https://tinystacklabs.lemonsqueezy.com/buy/colorloupe-pro";
+const STORE_CHECKOUT_URL = "https://micro-software-lab.lemonsqueezy.com/checkout/buy/a749cf66-9bd5-48ee-9b27-c3e949d253f0";
 
 let currentColor = '#2997FF';
 let isPro = false;
